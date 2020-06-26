@@ -44,6 +44,8 @@ def check_winner(board):
     '''
     checks if the current state of game has a winner
     '''
+
+    # checks for all the 3 vertical, horizontal possibilities and both the diagonals
     if board['q'] == board['w'] == board['e'] == 'X' or \
        board['a'] == board['s'] == board['d'] == 'X' or \
        board['z'] == board['x'] == board['c'] == 'X' or \
@@ -54,6 +56,8 @@ def check_winner(board):
        board['e'] == board['s'] == board['z'] == 'X':
 
         print('\n\n\t\tPLAYER1 WINS\n\n')
+
+        # increase games won by first player by 1
         players['Player1'] += 1
         return True
 
@@ -67,6 +71,8 @@ def check_winner(board):
             board['e'] == board['s'] == board['z'] == 'O':
 
         print('\n\n\t\tPLAYER2 WINS\n\n')
+
+        # increase game won by second player by 1
         players['Player2'] += 1
         return True
 
@@ -116,7 +122,12 @@ def start_game():
         # board is a dictionary where each key corresponds to a button on keyboard that needs to be pressed to fill in that space
         # initially the board is empty
         board = {'q': ' ', 'w': ' ', 'e': ' ', 'a': ' ', 's': ' ', 'd': ' ', 'z': ' ', 'x': ' ', 'c': ' '}
+
+        # keeps track of already filled spaces on board
         check_choice = []
+
+        # keeps track if user wants to play again
+        play_again = 'NO'
 
         print('\nPlayer1(X) your turn:\n')
         display_Board(board)
@@ -155,6 +166,19 @@ def start_game():
                 # increase draw count by 1
                 players['draw'] += 1
                 break
+
+        # ask the users if they want to play again and continue the game likewise
+        while play_again not in ['y', 'n']:
+            play_again = input('Play another game? Enter [Y/N]: ').lower()
+
+        if play_again == 'y':
+            game_on = True
+
+        else:
+            game_on = False
+
+            #if the user decides to stop here, display all the game statistics between the users
+            print(f'\n\n\t\t Player1 won {players["Player1"]} games, Player2 won {players["Player2"]} games and they drew {players["draw"]} times\n\n')
 
 
 start_game()
