@@ -22,7 +22,22 @@ def user_choice(check_choice):
     '''
     checks and confirms the user choice of where to put the marker
     '''
-    pass
+    wrong_choice = True
+
+    while wrong_choice:
+
+        choice = input('\nEnter a valid box to enter your mark: ').lower()
+
+        if choice not in ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c']:
+            print('Sorry but you can only choose corresponding box letters provided in instructions!')
+
+        elif choice in check_choice:
+            print('Sorry but this box is already occupied! Select an empty space!!')
+
+        else:
+            wrong_choice = False
+
+    return choice
 
 
 def check_winner(board):
@@ -36,7 +51,8 @@ def update_board(board, choice, symbol):
     '''
     updates the board data with the marker of user choice
     '''
-    pass
+    board[choice] = symbol
+    return board
 
 
 def clear():
@@ -79,9 +95,36 @@ def start_game():
         initially the board is empty
         '''
         board = {'q': ' ', 'w': ' ', 'e': ' ', 'a': ' ', 's': ' ', 'd': ' ', 'z': ' ', 'x': ' ', 'c': ' '}
+        check_choice = []
 
         print('\nPlayer1(X) your turn:\n')
         display_Board(board)
+
+        # determines which player will play next
+        turn = 1
+
+        # loop till no winner is decided
+        while not check_winner(board):
+
+            # get the user choice of space to put their marker and update check_choice to disallow choosing that space further
+            choice = user_choice(check_choice)
+            check_choice.append(choice)
+
+            # alternate turn switches between markers: 'X' and 'O'
+            if turn % 2 == 0:
+                symbol = 'O'
+            else:
+                symbol = 'X'
+
+            # update the board after user selects their space of choice and display the current board state
+            board = update_board(board, choice, symbol)
+            clear()
+            display_Board(board)
+            turn += 1
+
+            # break the loop if winner has been found
+            if check_winner(board):
+                break
 
 
 start_game()
