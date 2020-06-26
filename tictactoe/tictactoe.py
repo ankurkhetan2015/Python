@@ -44,7 +44,33 @@ def check_winner(board):
     '''
     checks if the current state of game has a winner
     '''
-    pass
+    if board['q'] == board['w'] == board['e'] == 'X' or \
+       board['a'] == board['s'] == board['d'] == 'X' or \
+       board['z'] == board['x'] == board['c'] == 'X' or \
+       board['q'] == board['a'] == board['z'] == 'X' or \
+       board['w'] == board['s'] == board['x'] == 'X' or \
+       board['e'] == board['d'] == board['c'] == 'X' or \
+       board['q'] == board['s'] == board['c'] == 'X' or \
+       board['e'] == board['s'] == board['z'] == 'X':
+
+        print('\n\n\t\tPLAYER1 WINS\n\n')
+        players['Player1'] += 1
+        return True
+
+    elif board['q'] == board['w'] == board['e'] == 'O' or \
+        board['a'] == board['s'] == board['d'] == 'O' or \
+        board['z'] == board['x'] == board['c'] == 'O' or \
+        board['q'] == board['a'] == board['z'] == 'O' or \
+        board['w'] == board['s'] == board['x'] == 'O' or \
+        board['e'] == board['d'] == board['c'] == 'O' or \
+        board['q'] == board['s'] == board['c'] == 'O' or \
+            board['e'] == board['s'] == board['z'] == 'O':
+
+        print('\n\n\t\tPLAYER2 WINS\n\n')
+        players['Player2'] += 1
+        return True
+
+    return False
 
 
 def update_board(board, choice, symbol):
@@ -67,13 +93,10 @@ def start_game():
     the game logic resides here
     '''
 
-    '''
-    display the instruction for the players to know how to play
-    '''
+    # display the instruction for the players to know how to play
     instruction_board = [['q', 'w', 'e'], ['a', 's', 'd'], ['z', 'x', 'c']]
-    '''
-    initially game_on is True as the players play the first game
-    '''
+
+    # initially game_on is True as the players play the first game
     game_on = True
 
     print('\nThe following keyboard keys represent the box to put your mark "X" or "O" \n')
@@ -89,11 +112,9 @@ def start_game():
             print('--+---+--')
 
     while game_on:
-        '''
-        board is a dictionary where each key corresponds to a button on keyboard that needs to be pressed to fill in that space
 
-        initially the board is empty
-        '''
+        # board is a dictionary where each key corresponds to a button on keyboard that needs to be pressed to fill in that space
+        # initially the board is empty
         board = {'q': ' ', 'w': ' ', 'e': ' ', 'a': ' ', 's': ' ', 'd': ' ', 'z': ' ', 'x': ' ', 'c': ' '}
         check_choice = []
 
@@ -124,6 +145,15 @@ def start_game():
 
             # break the loop if winner has been found
             if check_winner(board):
+                break
+
+            # if no winner, check if all spaces are already occupied and then declare a draw
+            elif len(check_choice) == 9:
+
+                print('\n\n\t\tGAME ENDED IN A DRAW!\n\n')
+
+                # increase draw count by 1
+                players['draw'] += 1
                 break
 
 
