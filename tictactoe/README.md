@@ -1,1 +1,1 @@
-This is a only terminal text display tic tac toe game
+This is a only terminal text display tic tac toe game made using functions
