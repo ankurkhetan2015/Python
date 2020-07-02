@@ -35,12 +35,71 @@ class Deck:
                 self.all_cards.append(created_card)
 
     def shuffle(self):
-
         random.shuffle(self.all_cards)
 
     def deal_one(self):
-
         return self.all_cards.pop()
+
+
+# Class to handle cards in hand and deal with aces and card values
+class Hand:
+
+    def __init__(self):
+
+        # Initially no cards in hand
+        self.cards = []
+        # Initially hand has no value
+        self.value = 0
+        # Initially no ace in hand
+        self.ace = 0
+
+    def add_card(self, card):
+        pass
+
+    def adjust_ace(self):
+        pass
+
+
+# Chips class to handle starting chips in players hand and the win/loss
+class Chips:
+
+    def __init__(self, money=0):
+
+        # Starting money with a player
+        self.amount = money
+        # Initially no bet
+        self.bet = 0
+
+    def win_bet(self):
+        pass
+
+    def lose_bet(self):
+        pass
+
+
+def place_bet():
+
+    play = 'NO'
+
+    while play not in ['y', 'n']:
+        play = input('Would you like to place a bet?[Y/N]: ').lower()
+
+    if play == 'n':
+        print('\nIt was nice to have you. See you again!\n')
+        exit()
+
+    print()
+
+    while True:
+
+        try:
+            bet_placed = int(input('Enter the amount (in $) to bet: '))
+
+        except ValueError:
+            print('\nYou must enter only positive whole numbers\n')
+
+        else:
+            return bet_placed
 
 
 def play_game():
@@ -51,7 +110,13 @@ def play_game():
     # Shuffle the 52 cards in the deck
     new_deck.shuffle()
 
+    bet_placed = place_bet()
 
-print('Welcome to the game of BlackJack!!!\n\n')
-# Start playing the game
-play_game()
+    print(bet_placed)
+
+
+if __name__ == "__main__":
+
+    print('\n\nWelcome to the game of BlackJack!!!\n\n')
+    # Start playing the game
+    play_game()
