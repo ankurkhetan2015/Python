@@ -37,7 +37,7 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.all_cards)
 
-    def deal_one(self):
+    def deal(self):
         return self.all_cards.pop()
 
 
@@ -77,31 +77,84 @@ class Chips:
         pass
 
 
-def place_bet():
-
-    play = 'NO'
-
-    while play not in ['y', 'n']:
-        play = input('Would you like to place a bet?[Y/N]: ').lower()
-
-    if play == 'n':
-        print('\nIt was nice to have you. See you again!\n')
-        exit()
-
-    print()
+# function to set up the player's chips in hand
+def chips_in_hand():
 
     while True:
 
         try:
-            bet_placed = int(input('Enter the amount (in $) to bet: '))
+            chips = int(input('Enter the amount (in $) you want to enter the game with: '))
 
         except ValueError:
             print('\nYou must enter only positive whole numbers\n')
 
         else:
-            return bet_placed
+            return chips
 
 
+# function to ask player to place their bet
+def place_bet(amount):
+
+    bet = 'NO'
+    bet_placed = amount + 1
+
+    while bet not in ['y', 'n']:
+        bet = input('\nWould you like to place a bet?[Y/N]: ').lower()
+
+    if bet == 'n':
+        print('\nIt was nice to have you. See you again!\n')
+        exit()
+
+    while bet_placed > amount:
+
+        print(f'\nEnter a bet less than in hand amount: {amount} \n')
+
+        try:
+            bet_placed = int(input('Enter the amount (in $) to bet: '))
+
+        except ValueError:
+            print('\n(You must enter only positive whole numbers)')
+
+    return bet_placed
+
+
+# function to request a hit during the game
+def hit(deck, hand):
+    pass
+
+
+# function to prompt user if they want a hit or stand
+def hit_or_stand(deck, hand):
+    pass
+
+
+# functions to show cards and their Value for both players and dealer
+def show_some(player, dealer):
+    pass
+
+
+def show_all(player, dealer):
+    pass
+
+
+# functions to handle possible outcomes of the game
+def player_busts():
+    pass
+
+
+def player_wins():
+    pass
+
+
+def dealer_busts():
+    pass
+
+
+def dealer_wins():
+    pass
+
+
+# function to control game logic
 def play_game():
 
     # Create a deck object
@@ -110,13 +163,26 @@ def play_game():
     # Shuffle the 52 cards in the deck
     new_deck.shuffle()
 
-    bet_placed = place_bet()
+    # Set up Player's Chips
+    amount = chips_in_hand()
+    player_chips = Chips(amount)
 
-    print(bet_placed)
+    # Player's bet amount
+    bet_placed = place_bet(amount)
+
+    # Deal two cards each to everyone(including dealer) playing one-by-one
+    player_hand = Hand()
+    dealer_hand = Hand()
+
+    player_hand.add_card(new_deck.deal())
+    dealer_hand.add_card(new_deck.deal())
+    player_hand.add_card(new_deck.deal())
+    dealer_hand.add_card(new_deck.deal())
 
 
 if __name__ == "__main__":
 
     print('\n\nWelcome to the game of BlackJack!!!\n\n')
+
     # Start playing the game
     play_game()
